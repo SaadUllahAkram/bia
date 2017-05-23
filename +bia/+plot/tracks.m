@@ -1,4 +1,4 @@
-function tracks(opts, ims, stats_tra, stats_info, stats_gt)
+function tracks(opts, ims, stats_tra, stats_info, gt)
 % modes:
 % 1-> plot3 -> x,y,t
 % 2-> [im+traj]
@@ -29,6 +29,12 @@ show_im             = opts.show_im;
 rect                = opts.rect;
 use_sqrt            = opts.use_sqrt;
 verbose             = opts.verbose;
+
+if nargin >= 5
+    foi_border = gt.foi_border;
+else
+    foi_border = 0;
+end
 
 if nargin >= 4 && ~isempty(stats_info)
     plot_events = true;
@@ -100,7 +106,7 @@ elseif ismember(mode, [2 3 4])
         elseif mode == 4
             im2 = bia.convert.l2rgb(bia.convert.stat2im(stats_tra{t}, sz));
         end
-        
+        im2 = bia.draw.roi(struct('out',[0 0 0]), im2, foi_border);
         % im3 = bia.draw.tracks_traj(opts_traj, im2, stats_tra, trajs, t);%todo: does not plot images
         
         imshow(im2, 'parent', ax_h(end))

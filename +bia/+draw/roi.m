@@ -19,7 +19,7 @@ if length(sz) == 2
     im = repmat(im, [1 1 3]);
 end
 
-if length(in) == 3 && sum(in) > 0
+if length(in) == 3 && sum(in) > 0 && foi > 0
     im = add_line(im, foi, in, line_w);
 end
 
